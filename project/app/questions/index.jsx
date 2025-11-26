@@ -7,30 +7,15 @@ import {
     StatusBar,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { auth } from '../../firebaseConfig';
-import { signOut } from 'firebase/auth';
 import styles from './style';
 
 export default function Questions({ navigation }) {
 
     const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        async function checkUser() {
-            const savedUser = await AsyncStorage.getItem('@user');
-            if (!savedUser) {
-                navigation.replace('home');
-            } else {
-                setUser(JSON.parse(savedUser));
-            }
-        }
-        checkUser();
-    }, []);
-
     const handleLogout = async () => {
-        await signOut(auth);
         await AsyncStorage.removeItem('@user');
-        navigation.replace('home');
+        navigation.replace('login');
     };
 
 
